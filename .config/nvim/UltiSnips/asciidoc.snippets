@@ -1,0 +1,155 @@
+snippet hea "Document Header" b
+= ${1:Title}
+Michał Kozłowski
+:lang: pl
+:sectanchors:
+:sectnums:
+:icons: font
+:imagesdir: ./images
+:stem: latexmath
+:source-highlighter: rouge
+:toc:
+:toclevels: 5
+
+
+endsnippet
+
+
+snippet att "Document Attributes"
+Michał Kozłowski
+:lang: pl
+:sectanchors:
+:sectnums:
+:icons: font
+:imagesdir: ./images
+:stem: latexmath
+:source-highlighter: rouge
+:toc:
+:toclevels: 5
+
+
+endsnippet
+
+snippet info "Informacje" b
+Wymagania:
+
+* Obecność: $1
+* Ćwiczenia: $2
+* Wykład: $3
+$0
+endsnippet
+
+snippet w "Wykład | Data" b
+== Wykład {counter:wyk}. | `date +%d.%m.%y`
+
+[.lead]
+$0
+endsnippet
+
+snippet cw "Ćwiczenia | Data" b
+== Ćwiczenia {counter:cw}. | `date +%d.%m.%y`
+
+[.lead]
+$0
+endsnippet
+
+snippet not "NOTE Admonition" b
+NOTE: 
+endsnippet
+
+snippet tip "TIP Admonition" b
+TIP: 
+endsnippet
+
+snippet imp "IMPORTANT Admonition" b
+IMPORTANT: 
+endsnippet
+
+snippet war "WARNING Admonition" b
+WARNING: 
+endsnippet
+
+snippet cau "CAUTION Admonition" b
+CAUTION: 
+endsnippet
+
+snippet 2= "Level 1 Section" b
+== 
+endsnippet
+
+snippet 3= "Level 2 Section" b
+=== 
+endsnippet
+
+snippet 4= "Level 3 Section" b
+==== 
+endsnippet
+
+snippet 5= "Level 4 Section" b
+===== 
+endsnippet
+
+snippet 6= "Level 5 Section" b
+====== 
+endsnippet
+
+snippet img "Image - Block"
+.$1
+image::$2[$1]
+endsnippet
+
+snippet vid "Video - Block"
+video::$1[$0]
+endsnippet
+
+snippet lit "Literal Block" b
+....
+$1
+....
+$0
+endsnippet
+
+snippet lis "Listing Block" b
+----
+$1
+----
+$0
+endsnippet
+
+snippet cod "Code Block" b
+[source,$1:lang]
+----
+$2
+----
+$0
+endsnippet
+
+snippet sid "Sidebar Block" b
+****
+$1
+****
+$0
+endsnippet
+
+snippet quo "Quote - Block" b
+[quote, ${1:Author}, ${2:Title}]
+____
+$3
+____
+$0
+endsnippet
+
+snippet tab "Table" b
+|===
+| $1
+|===
+$0
+endsnippet
+
+snippet diag "Diagram Block" b
+[plantuml,$1,svg]
+....
+$2
+....
+$0
+endsnippet
