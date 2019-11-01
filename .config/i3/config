@@ -213,5 +213,7 @@ exec --no-startup-id ~/.fehbg &
 # exec --no-startup-id compton
 
 bindsym $mod+Shift+Return exec chromium
+assign [class="Chromium"] $ws2
+
 bindsym $mod+Shift+f exec dolphin
 bindsym $mod+Shift+n exec nvim-qt

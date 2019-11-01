@@ -2,6 +2,7 @@ augroup Spelling
 	autocmd!
 
 	autocmd FileType asciidoc* setlocal spell spelllang=pl
+	autocmd FileType asciidoc* setlocal textwidth=80 wrap
 augroup END
 
 augroup PlantUMLHighlight

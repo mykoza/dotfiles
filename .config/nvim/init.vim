@@ -104,7 +104,6 @@ Plug 'wellle/targets.vim'
 Plug 'haya14busa/is.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'dracula/vim', { 'as': 'dracula-vim' }
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
@@ -114,11 +113,27 @@ Plug 'dkarter/bullets.vim', { 'branch': 'asciidoc-support'}
 Plug 'inkarkat/vim-syntaxrange'
 Plug 'aklt/plantuml-syntax'
 
+" v Themes v
+Plug 'dracula/vim', { 'as': 'dracula-vim' }
+Plug 'npmiller/vreeze'
+Plug 'AlessandroYorba/Breve'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
+Plug 'noahfrederick/vim-hemisu'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'nightsense/seabird'
+Plug 'nightsense/snow'
+Plug 'nightsense/shoji'
+Plug 'kaicataldo/material.vim'
+
 call plug#end()
 " }}}
 
 set termguicolors
-colorscheme dracula
+set background=light
+let g:material_theme_style = 'lighter'
+let g:material_terminal_italics = 1
+colorscheme material
 
 "
 " Lightline {{{
@@ -136,7 +151,7 @@ function! LightLineFiletype()
 endfunction
 
 let g:lightline = {
-	\	'colorscheme': 'dracula',
+	\	'colorscheme': 'material_vim',
 	\	'component_function': {
 	\		'fileformat': 'LightlineFileformat',
 	\		'fileencoding': 'LightlineFileencoding',
@@ -232,7 +247,7 @@ function! GdrivePush(folder)
 	" if adoc export to pdf
 	if l:ft =~? 'asciidoc\w*'
 		" execute '!asciidoctor-pdf -r asciidoctor-diagram' . expand('%')
-		call jobsend(l:id, 'asciidoctor-pdf -r asciidoctor-diagram '  . '"' . l:filepath . '"' . "\<CR>")
+		call jobsend(l:id, 'asciidoctor-pdf -a pdf-theme=~/Documents/my-theme.yml -r asciidoctor-diagram '  . '"' . l:filepath . '"' . "\<CR>")
 	endif
 
 	" push . or ..
@@ -272,7 +287,7 @@ endfunction
 " }}}
 
 function! OpenPDF()
-	execute '!okular ' . '"' . expand('%:r') . '.pdf' . '" &'
+	execute '!zathura ' . '"' . expand('%:r') . '.pdf' . '" &'
 endfunction
 command! OpendPDF call OpenPDF()
 

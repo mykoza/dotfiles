@@ -30,13 +30,16 @@ nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>vi :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>vg :e ~/.config/nvim/ginit.vim<CR>
 nnoremap <leader>vm :e ~/.config/nvim/mappings.vim<CR>
+nnoremap <leader>va :e ~/.config/nvim/asciidoc-support.vim<CR>
 
 " Export
 nnoremap <leader>eah :!asciidoctor -r asciidoctor-diagram "%"<CR>
-nnoremap <leader>eap :!asciidoctor-pdf -a pdf-theme=~/Documents/my-theme.yml -r asciidoctor-diagram "%"<CR>
+nnoremap <leader>eap :!asciidoctor-pdf -a pdf-theme=~/Documents/my-theme.yml -r asciidoctor-diagram -r asciidoctor-mathematical "%"<CR>
 
 " Google Drive
 nnoremap <leader>gp :call GdrivePush('')<CR>
 nnoremap <leader>gP :call GdrivePush('m')<CR>
 nnoremap <leader>gd :call GdrivePull('')<CR>
 nnoremap <leader>gD :call GdrivePull('m')<CR>
+
+nnoremap <F2> [s1z=
