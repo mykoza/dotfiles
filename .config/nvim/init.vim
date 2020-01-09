@@ -19,7 +19,7 @@ set whichwrap+=<,>,h,l,
 set cursorline
 set fileformats=unix,dos
 set conceallevel=2
-set colorcolumn=78
+set colorcolumn=80
 
 let mapleader="\<Space>"
 set timeoutlen=2000
@@ -112,8 +112,10 @@ Plug 'shougo/neco-vim'
 Plug 'dkarter/bullets.vim', { 'branch': 'asciidoc-support'}
 Plug 'inkarkat/vim-syntaxrange'
 Plug 'aklt/plantuml-syntax'
+Plug 'tpope/vim-eunuch'
 
 " v Themes v
+Plug 'lifepillar/vim-colortemplate'
 Plug 'dracula/vim', { 'as': 'dracula-vim' }
 Plug 'npmiller/vreeze'
 Plug 'AlessandroYorba/Breve'
@@ -125,15 +127,18 @@ Plug 'nightsense/seabird'
 Plug 'nightsense/snow'
 Plug 'nightsense/shoji'
 Plug 'kaicataldo/material.vim'
+Plug 'morhetz/gruvbox'
+Plug 'ntk148v/vim-horizon'
+Plug 'fneu/breezy'
 
 call plug#end()
 " }}}
 
-set termguicolors
 set background=light
+set termguicolors
 let g:material_theme_style = 'lighter'
 let g:material_terminal_italics = 1
-colorscheme material
+colorscheme breezy
 
 "
 " Lightline {{{
@@ -151,7 +156,7 @@ function! LightLineFiletype()
 endfunction
 
 let g:lightline = {
-	\	'colorscheme': 'material_vim',
+	\	'colorscheme': 'breezy',
 	\	'component_function': {
 	\		'fileformat': 'LightlineFileformat',
 	\		'fileencoding': 'LightlineFileencoding',
@@ -287,7 +292,7 @@ endfunction
 " }}}
 
 function! OpenPDF()
-	execute '!zathura ' . '"' . expand('%:r') . '.pdf' . '" &'
+	execute 'silent !zathura ' . '"' . expand('%:r') . '.pdf' . '" &'
 endfunction
 command! OpendPDF call OpenPDF()
 
