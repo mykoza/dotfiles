@@ -1,4 +1,3 @@
-
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
@@ -52,7 +51,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.font = "Cascadia Code 8"
+-- beautiful.font = "Cascadia Code 8"
 beautiful.useless_gap = 4
 beautiful.wallpaper = "/home/michciu/Pictures/Walls/michelle-spollen-c9MFM8rSMsQ-unsplash.jpg"
 beautiful.notification_icon_size = 100
@@ -391,7 +390,9 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+	-- Shut down menu
+	awful.key({modkey, "Shift" }, "e", function () myshutdownmenu:show() end, {description = "show shutdown menu", group = "awesome"})
 )
 
 clientkeys = gears.table.join(
@@ -437,9 +438,21 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"}),
 	-- Volume control
-	awful.key({}, "XF86AudioMute", function () awful.spawn("amixer -D pulse sset Master toggle") end),
-	awful.key({}, "XF86AudioRaiseVolume", function () awful.spawn("amixer -D pulse sset Master 10%+") end),
-	awful.key({}, "XF86AudioLowerVolume", function () awful.spawn("amixer -D pulse sset Master 10%-") end)
+	awful.key({}, "XF86AudioMute", 	function ()
+										awful.spawn("amixer -D pulse sset Master toggle")
+										naughty.notify( {text = "Volume muted/unmuted",
+														title = "Volume Control"} )
+									end),
+	awful.key({}, "XF86AudioRaiseVolume", 	function ()
+												awful.spawn("amixer -D pulse sset Master 10%+")
+												naughty.notify( {text = "Volume Increased +10%",
+																title = "Volume Control"} )
+											end),
+	awful.key({}, "XF86AudioLowerVolume", 	function ()
+												awful.spawn("amixer -D pulse sset Master 10%-")
+												naughty.notify( {text = "Volume Decreased -10%",
+																title = "Volume Control"} )
+											end)
 )
 
 -- Bind all key numbers to tags.
