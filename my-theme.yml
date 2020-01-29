@@ -1,0 +1,10 @@
+extends: default
+
+caption:
+    align: center
+
+image:
+    align: center
+
+svg:
+    fallback_font_family: Noto Serif
