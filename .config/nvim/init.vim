@@ -27,6 +27,8 @@ set timeoutlen=2000
 set autowrite
 set hidden
 set showmatch
+
+set mouse=a
 " }}}
 
 "
@@ -41,7 +43,7 @@ set smartindent
 " }}}
 
 "
-" CTRL-Tab is Next window (mswin.vim) {{{
+" CTRL-Tab is Next window (only in GUI) {{{
 "
 noremap <C-Tab> <C-W>w
 inoremap <C-Tab> <C-O><C-W>w
@@ -58,7 +60,7 @@ set incsearch
 " }}}
 
 "
-" Pasting (from mswin.vim) {{{
+" Clipboard {{{
 "
 if has("clipboard")
     vnoremap <C-X> "+x
@@ -92,7 +94,7 @@ set listchars=tab:»\ ,trail:·,nbsp:_,extends:↷,precedes:↶
 "
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'ap/vim-css-color'
+Plug 'chrisbra/Colorizer'
 Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
 Plug 'tmsvg/pear-tree'
@@ -107,9 +109,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
-Plug 'shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
-Plug 'shougo/neco-vim'
-Plug 'dkarter/bullets.vim', { 'branch': 'asciidoc-support'}
+Plug 'dag/vim-fish'
+
+" Completions
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'dkarter/bullets.vim'
 Plug 'inkarkat/vim-syntaxrange'
 Plug 'aklt/plantuml-syntax'
 Plug 'tpope/vim-eunuch'
@@ -130,167 +135,47 @@ Plug 'kaicataldo/material.vim'
 Plug 'morhetz/gruvbox'
 Plug 'ntk148v/vim-horizon'
 Plug 'fneu/breezy'
+Plug 'jeffkreeftmeijer/vim-dim'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 " }}}
 
-set background=light
+" Theme
+set background=dark
 set termguicolors
 let g:material_theme_style = 'lighter'
 let g:material_terminal_italics = 1
-colorscheme breezy
+colorscheme gruvbox
+highlight Normal guibg=NONE
 
-"
-" Lightline {{{
-"
-function! LightlineFileformat()
-	return winwidth(0) > 75 ? &fileformat : ''
-endfunction
+" Lightline
+source ~/.config/nvim/lightline.vim
 
-function! LightlineFileencoding()
-	return winwidth(0) > 75 ? &fileencoding : ''
-endfunction
-
-function! LightLineFiletype()
-	return winwidth(0) > 45 ? &filetype : ''
-endfunction
-
-let g:lightline = {
-	\	'colorscheme': 'breezy',
-	\	'component_function': {
-	\		'fileformat': 'LightlineFileformat',
-	\		'fileencoding': 'LightlineFileencoding',
-	\		'filetype': 'LightLineFiletype',
-	\	},
-	\	'mode_map': {
-	\		'n': 'NOR',
-	\		'i': 'INS',
-	\		'R': 'REP',
-	\		'v': 'VIS',
-	\		'V': 'V-L',
-	\		"\<C-v>": 'V-B',
-	\		'c' : 'COM',
-	\		's': 'SEL',
-	\		'S': 'S-L',
-	\		"\<C-s>": 'S-B',
-	\		't': 'TER'
-	\	}
-	\ }
-" }}}
-
-"
-" Pear-tree {{{
-"
+" Pear-tree
 let g:pear_tree_smart_openers = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 imap <A-CR> <Plug>(PearTreeExpand)
-" }}}
 
-"
-" Startify {{{
-"
-let g:startify_bookmarks = [ {'i': '~/.config/nvim/init.vim'}, {'g': '~/.config/nvim/ginit.vim'}, {'m': '~/gdrive/Magisterka/'} ]
-let g:startify_change_to_dir = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_custom_header = [
-	\ '                                          /$$              ',
-	\ '                                         |__/              ',
-	\ ' /$$$$$$$   /$$$$$$   /$$$$$$  /$$    /$$ /$$ /$$$$$$/$$$$ ',
-	\ '| $$__  $$ /$$__  $$ /$$__  $$|  $$  /$$/| $$| $$_  $$_  $$',
-	\ '| $$  \ $$| $$$$$$$$| $$  \ $$ \  $$/$$/ | $$| $$ \ $$ \ $$',
-	\ '| $$  | $$| $$_____/| $$  | $$  \  $$$/  | $$| $$ | $$ | $$',
-	\ '| $$  | $$|  $$$$$$$|  $$$$$$/   \  $/   | $$| $$ | $$ | $$',
-	\ '|__/  |__/ \_______/ \______/     \_/    |__/|__/ |__/ |__/',
-	\ ]                                                          
+" Startify
+source ~/.config/nvim/startify.vim
 
-let g:startify_lists = [
-	\ { 'type': 'files',     'header': ['   MRU']            },
-	\ { 'type': 'sessions',  'header': ['   Sessions']       },
-	\ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-	\ { 'type': 'commands',  'header': ['   Commands']       },
-	\ ]
-" }}}
-
-" NERDTree {{{
+" NERDTree
 let g:NERDTreeChDirMode = 2
-" }}}
 
 " Bullets.vim {{{
 let g:bullets_enabled_file_types = [
 	\ 'asciidoc',
 	\ 'markdown'
 	\]
-let g:bullets_enable_ascii_indent = 1
 
-let g:deoplete#enable_at_startup = 0
 " }}}
 
-"
-" Google Drive {{{
-"
-tnoremap <Esc> <C-\><C-n><CR>
-tnoremap <F4> <C-\><C-n>:bd!<CR>
-tnoremap <expr> <C-r> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" Google Drive
+source ~/.config/nvim/gdrive.vim
 
-function! GdrivePush(folder)
-	" Write file
-	write
-	" open new split at bottom
-	split
-	execute "normal! \<C-w>J" 
-	" get filetype and paths
-	let l:ft = &ft
-	let l:filepath = expand('%:p')
-	let l:parent = expand('%:p:h')
-	let l:root = expand('%:p:h:h')
-	" start terminal
-	terminal
-	" get terminal ID
-	let l:id = b:terminal_job_id
-	
-	" if adoc export to pdf
-	if l:ft =~? 'asciidoc\w*'
-		" execute '!asciidoctor-pdf -r asciidoctor-diagram' . expand('%')
-		call jobsend(l:id, 'asciidoctor-pdf -a pdf-theme=~/Documents/my-theme.yml -r asciidoctor-diagram '  . '"' . l:filepath . '"' . "\<CR>")
-	endif
-
-	" push . or ..
-	if a:folder == ''
-		" execute push command
-		" execute '!drive push ' . expand('%:p:h')
-		" call feedkeys('idrive push ' . l:folder_path . "\<CR>", 'n')
-		call jobsend(l:id, 'drive push ' . '"' . l:parent . '"' . "\<CR>")
-	elseif a:folder == 'm'
-		" execute '!drive push ' . expand('%:p:h:h')
-		call jobsend(l:id, 'drive push ' . '"' . l:root . '"' . "\<CR>")
-	endif
-
-	startinsert
-endfunction
-
-function! GdrivePull(folder)
-	" open new split at bottom
-	split
-	execute "normal! \<C-w>J" 
-	" get filetype and paths
-	let l:parent = expand('%:p:h')
-	let l:root = expand('%:p:h:h')
-	" start terminal
-	terminal
-	" get terminal ID
-	let l:id = b:terminal_job_id
-
-	if a:folder == ''
-		" execute '!drive pull ' . expand('%:p:h')
-		call jobsend(l:id, 'drive pull ' . '"' . l:parent . '"' . "\<CR>")
-	elseif a:folder == 'm'
-		" execute '!drive pull ' . expand('%:p:h:h')
-		call jobsend(l:id, 'drive pull ' . '"' . l:root . '"' . "\<CR>")
-	endif
-endfunction
-" }}}
-
+" Zathura
 function! OpenPDF()
 	execute 'silent !zathura ' . '"' . expand('%:r') . '.pdf' . '" &'
 endfunction

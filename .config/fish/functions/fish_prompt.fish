@@ -89,6 +89,6 @@ function fish_prompt --description 'Write out the prompt'
         set_color normal
     end
 
-	set_color cyan
+	set_color $purple
     echo -n "$suffix "
 end

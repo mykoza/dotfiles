@@ -50,7 +50,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init("~/.config/awesome/mytheme.lua")
 -- beautiful.font = "Cascadia Code 8"
 beautiful.useless_gap = 4
 beautiful.wallpaper = "/home/michciu/Pictures/Walls/michelle-spollen-c9MFM8rSMsQ-unsplash.jpg"
@@ -124,9 +124,6 @@ myshutdownmenu = awful.menu({ items = { { "Suspend", "shutdown -H now"},
 									}
 							})
 
-myshutdownlauncher = awful.widget.launcher({ image = "/home/michciu/.config/awesome/shuticon.png",
-										 menu = myshutdownmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -144,30 +141,43 @@ month_calendar:attach(mytextclock, 'tr', { on_hover = false })
 
 --vicious.register(widget, wtype, format, interval, warg)
 -- Battery indicator
+baticon = wibox.widget.imagebox("/home/michciu/.config/awesome/arco-config/themes/powerarrow/icons/battery.png")
+
 batwidget = wibox.widget.textbox()
 vicious.register(
 	batwidget,
 	vicious.widgets.bat,
 	function (widget, args)
 		if args[1] == "-" then
-			return ("| Bat: %d%% |"):format(args[2])
+			return (" %d%%"):format(args[2])
 		else
-			return ("| Bat: ↯ %d%% |"):format(args[2])
+			return (" %d%%"):format(args[2])
 		end
 	end, 127, "BAT0")
 
 -- Volume indicator
+volicon = wibox.widget.imagebox("/home/michciu/.config/awesome/arco-config/themes/powerarrow/icons/vol.png")
+
 volwidget = wibox.widget.textbox()
 vicious.register(
 	volwidget,
 	vicious.widgets.volume,
 	function (widget, args)
 		if args[2] == "♩" then
-			return (" Vol: Muted |")
+			return ("  Muted")
 		else
-			return (" Vol: %d |"):format(args[1])
+			return ("  %d%%"):format(args[1])
 		end
 	end, 113, {"Master", "-D", "pulse"})
+
+-- Power button
+local powerbutton = wibox.widget.textbox(" ")
+powerbutton:connect_signal("button::press", function ()
+	myshutdownmenu:toggle()
+end)
+
+-- Separator
+local separator = wibox.widget.separator( { orientation = "vertical", forced_width = 20, span_ratio = 0.7, color = fg} )
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -272,12 +282,18 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
 			datewidget,
+			separator,
 			batwidget,
+			separator,
 			volwidget,
+			separator,
             wibox.widget.systray(),
+			separator,
             mytextclock,
+			separator,
             s.mylayoutbox,
-			myshutdownlauncher,
+			separator,
+			powerbutton
         },
     }
 end)
@@ -388,11 +404,34 @@ globalkeys = gears.table.join(
                   }
               end,
               {description = "lua execute prompt", group = "awesome"}),
+
+	-- Program shortcuts
+	awful.key({ modkey, "Shift" }, "Return", function() awful.spawn("chromium") end, { description = "run Chromium", group = "launcher"}),
+	awful.key({ modkey, "Shift" }, "v", function() awful.spawn(editor_cmd) end, { description = "run nvim", group = "launcher"}),
+	awful.key({ modkey, "Shift" }, "r", function() awful.spawn(terminal .. " -e ranger") end, { description = "run ranger", group = "launcher"}),
+
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 	-- Shut down menu
-	awful.key({modkey, "Shift" }, "e", function () myshutdownmenu:show() end, {description = "show shutdown menu", group = "awesome"})
+	awful.key({modkey, "Shift" }, "e", function () myshutdownmenu:show() end, {description = "show shutdown menu", group = "awesome"}),
+
+	-- Volume control
+	awful.key({}, "XF86AudioMute", 	function ()
+										awful.spawn("amixer -D pulse sset Master toggle")
+										naughty.notify( {text = "Volume muted/unmuted",
+														title = "Volume Control"} )
+									end),
+	awful.key({}, "XF86AudioRaiseVolume", 	function ()
+												awful.spawn("amixer -D pulse sset Master 10%+")
+												naughty.notify( {text = "Volume Increased +10%",
+																title = "Volume Control"} )
+											end),
+	awful.key({}, "XF86AudioLowerVolume", 	function ()
+												awful.spawn("amixer -D pulse sset Master 10%-")
+												naughty.notify( {text = "Volume Decreased -10%",
+																title = "Volume Control"} )
+											end)
 )
 
 clientkeys = gears.table.join(
@@ -436,23 +475,7 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"}),
-	-- Volume control
-	awful.key({}, "XF86AudioMute", 	function ()
-										awful.spawn("amixer -D pulse sset Master toggle")
-										naughty.notify( {text = "Volume muted/unmuted",
-														title = "Volume Control"} )
-									end),
-	awful.key({}, "XF86AudioRaiseVolume", 	function ()
-												awful.spawn("amixer -D pulse sset Master 10%+")
-												naughty.notify( {text = "Volume Increased +10%",
-																title = "Volume Control"} )
-											end),
-	awful.key({}, "XF86AudioLowerVolume", 	function ()
-												awful.spawn("amixer -D pulse sset Master 10%-")
-												naughty.notify( {text = "Volume Decreased -10%",
-																title = "Volume Control"} )
-											end)
+        {description = "(un)maximize horizontally", group = "client"})
 )
 
 -- Bind all key numbers to tags.
@@ -652,9 +675,13 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- {{{ Startup
 
-awful.spawn("/usr/lib/polkit-kde-authentication-agent-1")
-awful.spawn.with_shell("setxkbmap pl")
-awful.spawn("nm-applet")
-awful.spawn("xfce4-power-manager")
+awful.spawn.single_instance('/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1')
+awful.spawn("setxkbmap pl")
+awful.spawn("picom -b --experimental-backends")
+
+programs = {'nm-applet', 'xfce4-power-manager', 'variety', 'blueberrry-tray'}
+for i, program in ipairs(programs) do
+	awful.spawn.single_instance(program)
+end
 
 -- }}}
