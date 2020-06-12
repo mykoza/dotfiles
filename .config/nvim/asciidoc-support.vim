@@ -5,11 +5,11 @@ augroup Spelling
 	" autocmd FileType asciidoc* setlocal textwidth=80 wrap
 augroup END
 
-augroup PlantUMLHighlight
-	autocmd!
+" augroup PlantUMLHighlight
+" 	autocmd!
 
-	autocmd FileType asciidoc* call SyntaxRange#Include('\(\]\s*\n\)\@<=[-.]\{4}$', '\(\]\s*\n\)\@<![-.]\{4}$', 'plantuml')
-augroup END
+" 	autocmd FileType asciidoc* call SyntaxRange#Include('\(\]\s*\n\)\@<=[-.]\{4}$', '\(\]\s*\n\)\@<![-.]\{4}$', 'plantuml')
+" augroup END
 
 
 " AsciiDoc List Indentation {{{
@@ -38,7 +38,8 @@ endf
 
 augroup Indenting
 	autocmd!
-
+	
+	autocmd FileType asciidoc* setlocal noexpandtab
 	autocmd FileType asciidoc* inoremap <C-t> <C-o>:call AddBullet()<CR>
 	autocmd FileType asciidoc* inoremap <C-d> <C-o>:call DeleteBullet()<CR>
 augroup END

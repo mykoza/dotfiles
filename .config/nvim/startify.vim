@@ -1,4 +1,4 @@
-let g:startify_bookmarks = [ {'i': '~/.config/nvim/init.vim'}, {'g': '~/.config/nvim/ginit.vim'}, {'d': '~/gdrive/'} ]
+let g:startify_bookmarks = [ {'i': '~/.config/nvim/init.vim'}, {'g': '~/.config/nvim/ginit.vim'}, {'d': '~/gdrive/'}, {'a': '~/.config/awesome/rc.lua'} ]
 let g:startify_change_to_dir = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_custom_header = [

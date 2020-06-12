@@ -1,0 +1,24 @@
+# relative line numbers
+add-highlighter global/ number-lines -relative -hlcursor
+add-highlighter global/ wrap
+
+add-highlighter global/ show-matching
+
+# indentation
+set-option global tabstop 4
+set-option global indentwidth 4
+
+## tabs to spaces
+hook global InsertChar \t %{
+    exec -draft h@
+}
+
+set-option global scrolloff 10,10
+
+# case insensitive search
+map global prompt <a-i> "<home>(?i)<end>"
+
+colorscheme gruvbox
+
+face global Default none
+face global BufferPadding none

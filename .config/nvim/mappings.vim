@@ -2,17 +2,22 @@
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>fr :bro ol<CR>
 nnoremap <leader>q :q<CR>
+inoremap jj <Esc>
 
 " Buffers
-nnoremap <leader>bf :Buffers<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
 
-" Files / Find
+
+" FZF / Find
 nnoremap <leader>ff :FZF<CR>
 nnoremap <leader>fh :History<CR>
 nnoremap <leader>fl :Lines<CR>
 nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fm :Maps<CR>
+command! -bang HomeFiles call fzf#vim#files('~', <bang>0)
+nnoremap <leader>fa :HomeFiles<CR>
 
 " Windows
 nnoremap <leader>wo :only<CR> 
@@ -24,6 +29,7 @@ nnoremap <leader>wS :Startify<CR>
 
 " Plug
 nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>pc :PlugClean<CR>
 
 " Configs
