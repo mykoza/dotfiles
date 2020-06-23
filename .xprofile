@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+session=$XDG_SESSION_DESKTOP
+
+case $session in
+    xmonad|qtile|awesome) ~/scripts/autostart.sh;;
+    *) echo $session;;
+esac
+

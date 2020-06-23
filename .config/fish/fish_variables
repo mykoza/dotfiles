@@ -7,6 +7,8 @@ SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_clonefrom:rclone\x20copy\x20gdrive\x3a\x20/home/michciu/gdrive\x20\x2dP\x20\x2d\x2ddry\x2drun
 SETUVAR _fish_abbr_cloneto:rclone\x20copy\x20/home/michciu/gdrive\x20gdrive\x3a\x20\x2dP\x20\x2d\x2ddry\x2drun
 SETUVAR _fish_abbr_install:sudo\x20pacman\x20\x2dS
+SETUVAR _fish_abbr_la:exa\x20\x2dla
+SETUVAR _fish_abbr_ls:exa
 SETUVAR _fish_abbr_nv:nvim
 SETUVAR _fish_abbr_p:sudo\x20pacman
 SETUVAR _fish_abbr_pman:sudo\x20pacman

@@ -3,7 +3,6 @@ alsa-utils
 arandr
 arch-install-scripts
 base
-bibata-cursor-theme
 broadcom-wl
 chromium
 cronie
@@ -25,7 +24,6 @@ git
 gnome-keyring
 gpm
 groff
-grub
 haveged
 htop
 hwinfo
