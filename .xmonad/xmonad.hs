@@ -46,7 +46,7 @@ main = do
         ]
 
 myTerminal = "kitty"
-myEditor = "nvim"
+myEditor = "kak"
 myFileManager = "ranger"
 
 myLayoutHook = spacingRaw False (Border 0 10 0 10) True (Border 10 0 10 0) True $ avoidStruts (tall)

@@ -2,7 +2,7 @@ abbr -a install sudo pacman -S
 abbr -a p sudo pacman
 set -gx VISUAL nvim
 set -gx EDITOR nvim
-set -gx PATH $PATH /home/michciu/.gem/ruby/2.7.0/bin/
+set -gx PATH $PATH /home/michciu/.gem/ruby/2.7.0/bin/ /home/michciu/.emacs.d/bin/
 
 # Gruvbox Dark Medium theme
 set red fb4934 
