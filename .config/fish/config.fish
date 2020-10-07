@@ -1,5 +1,10 @@
 abbr -a install sudo pacman -S
+abbr -a update sudo pacman -Syu
 abbr -a p sudo pacman
+
+abbr -a ls exa
+abbr -a la exa -la
+
 set -gx VISUAL nvim
 set -gx EDITOR nvim
 set -gx PATH $PATH /home/michciu/.gem/ruby/2.7.0/bin/ /home/michciu/.emacs.d/bin/
